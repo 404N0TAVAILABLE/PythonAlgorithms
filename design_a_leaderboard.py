@@ -50,7 +50,8 @@ class Leaderboard:
 #    print(*(score for _, score in self.idToScore.most_common(K)))
     for c in self.idToScore.most_common(K) : print(f'{c[0]} {c[1]}')
 
-    respContinue = str(input('\nC\u0332ontinue?: '))
+    prompt = '\nPress any key to continue?: '
+    checkStr(prompt)
     print('\n')
 
     # _ is a throwaway variable
@@ -62,6 +63,10 @@ class Leaderboard:
 #######################################
   def reset(self, playerId: int) -> None:
     del self.idToScore[playerId]
+    print(f'Removed PlayerID {playerId}\n')
+    prompt = '\nPress any key to continue?: '
+    checkStr(prompt)
+    print('\n')
 
 
 # END OF CLASS & BEGINING OF FUNCTIONS
@@ -72,7 +77,7 @@ def switch(operation: int, input000 = 0, input001 = 0, isAuto = False):
     elif operation == 3: leadObj.reset(input000)
    
 
-def automatedOperation(actions : list, data : list ):
+def automatedOperation( ):
     for c in range(len(actions)):
         if (len(data[c]) > 0) : 
             switch(1, data[c][0], data[c][1], True) if (actions[c] == 'addScore') else None
@@ -82,7 +87,9 @@ def automatedOperation(actions : list, data : list ):
     print(f"{actions.count('addScore')} record(s) added.") 
     print(f"{actions.count('reset')} record(s) deleted.") 
     print(f"{actions.count('top')} record(s) displayed.") 
-    respContinue = str(input('\nC\u0332ontinue?: '))
+
+    prompt = '\nPress any key to continue?: '
+    checkStr(prompt)
     print('\n')
 
 
@@ -122,7 +129,6 @@ def interactiveOperation():
 def checkInt(promptOne : str) -> int:
     while True:
         try:
-            print('TAMA 111')
             userInput = int(input(promptOne + ': '))
             if (userInput <= 0): 
                 print('--> Enter a valid number.')
@@ -130,6 +136,17 @@ def checkInt(promptOne : str) -> int:
             return userInput
         except:
             print('-->Enter a valid number.')
+
+    return -1
+
+
+def checkStr(promptOne : str) -> str:
+    while True:
+        try:
+            userInput = str(input(promptOne + ': '))
+            return userInput
+        except:
+            print('--->Enter a valid response.')
 
     return -1
 
@@ -148,8 +165,7 @@ def introPrompt():
 
     if autoInput == '1':
         isAuto = True
-        # passing parameters in case I decide to change it later
-        automatedOperation(actions, data)
+        automatedOperation()
     elif autoInput == '2':
         isAuto = False
         interactiveOperation()
