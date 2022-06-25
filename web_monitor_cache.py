@@ -52,7 +52,7 @@ def monitor(url):
         # Set the max feed entries to retrieve
         for entry in feed.entries[:50]:
 #            if "python" in entry.title.lower():
-            if keyword in entry.title.lower():
+            if searchKeyword in entry.title.lower():
                 truncated_title = (
                         entry.title[:maxlen] + "..."
                         if len(entry.title) > maxlen
@@ -76,6 +76,7 @@ def monitor(url):
 
 
 
+# Update to remove hardcoded search keywords
 # Example rss & atom URLs (could probably be added to a dictionary)
 listURLs = [ "Https://news.google.com/news/rss/search?q={inflation}", 
         "Https://news.google.com/news/rss/search?q={yen}", 
@@ -95,12 +96,12 @@ logDir = "dat"
 
 # search keyword in title (Example: python, tesla, etc.) 
 # or can use space
-keyword = " "
+searchKeyword = " "
 
 # - index of the lists above to retrieve.  
 # - if needed, could probably add a loop for the entire list on
 # on a daily basis.
-siteIndex = 1
+siteIndex = 2
 
 # zero out any existing logs
 open("./" + logDir + "/" + listFileName[siteIndex] + logExt, "w").close()
